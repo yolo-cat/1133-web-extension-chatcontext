@@ -1,0 +1,73 @@
+/* ResizeObserver 錯誤修復樣式 */
+
+/* 全局 Element Plus 組件修復 */
+.el-card,
+.el-container,
+.el-header,
+.el-main,
+.el-menu {
+  /* 使用 CSS containment 防止不必要的重新計算 */
+  contain: layout style;
+}
+
+/* 防止 Element Plus 組件的動態尺寸變化 */
+.el-button,
+.el-input,
+.el-form-item {
+  /* 穩定化表單元素尺寸 */
+  box-sizing: border-box;
+}
+
+/* 防止文字內容引起的尺寸變化 */
+.el-card__body,
+.el-card__header {
+  /* 確保內容區域穩定 */
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 針對 Chrome 擴展環境的特殊修復 */
+@media screen and (max-width: 400px) {
+  /* Chrome 擴展 popup 通常很小，需要特殊處理 */
+  .el-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .el-card {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+/* 防止滾動條引起的 ResizeObserver 觸發 */
+* {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* 防止動畫引起的尺寸觀察錯誤 */
+.el-message {
+  /* 消息組件穩定化 */
+  contain: layout style paint;
+}
+
+/* 針對 Vue transition 的修復 */
+.v-enter-active,
+.v-leave-active {
+  /* 防止過渡動畫觸發 ResizeObserver */
+  contain: layout;
+}

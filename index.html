@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList Extension</title>
+    <style>
+      /* Chrome 擴展 popup 特定樣式 */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 400px;
+        min-height: 500px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      }
+
+      #app {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* 防止 popup 滾動條問題 */
+      html, body {
+        overflow-x: hidden;
+      }
+
+      /* 確保 Element Plus 組件在小視窗中正確顯示 */
+      .el-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+
+      .el-header {
+        padding: 10px !important;
+      }
+
+      .el-main {
+        padding: 10px !important;
+      }
+
+      /* Chrome 擴展環境適配 */
+      .app-header h1 {
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .nav-menu .el-menu {
+        font-size: 14px !important;
+      }
+
+      .el-card {
+        margin-bottom: 10px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+

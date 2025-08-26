@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList Extension 測試頁面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .selectable-text {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin: 10px 0;
+            border-radius: 4px;
+            cursor: text;
+            user-select: text;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .test-button {
+            background: #409EFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #337ab7;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>TodoList Chrome Extension 測試頁面</h1>
+
+    <div class="test-section">
+        <h2>🧪 擴展功能測試</h2>
+        <p>這個頁面用來測試 TodoList Chrome Extension 的文字選取功能。</p>
+
+        <div class="status info">
+            <strong>測試步驟：</strong>
+            <ol>
+                <li>確保已在Chrome中載入擴展程序（使用 <code>dist</code> 資料夾）</li>
+                <li>在下方的藍色區塊中選取任意文字</li>
+                <li>觀察是否出現通知</li>
+                <li>點擊擴展圖標檢查待辦清單</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 可選取的測試文字</h2>
+
+        <div class="selectable-text">
+            <strong>測試文字 1：</strong>買牛奶和麵包
+        </div>
+
+        <div class="selectable-text">
+            <strong>測試文字 2：</strong>準備明天的會議資料
+        </div>
+
+        <div class="selectable-text">
+            <strong>測試文字 3：</strong>這是一段較長的測試文字，用來測試擴展是否能正確處理較長的文字內容並正確顯示在待辦清單中。
+        </div>
+
+        <div class="selectable-text">
+            <strong>測試文字 4：</strong>打電話給客戶討論專案進度
+        </div>
+
+        <p>請嘗試選取上面任一段文字，應該會看到：</p>
+        <ul>
+            <li>🔵 藍色通知：「正在添加到待辦清單...」</li>
+            <li>✅ 綠色通知：「已添加到待辦清單: [文字內容]」</li>
+            <li>❌ 紅色通知：如果出現錯誤</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 診斷工具</h2>
+        <button class="test-button" onclick="checkExtensionStatus()">檢查擴展狀態</button>
+        <button class="test-button" onclick="testMessage()">測試訊息發送</button>
+        <button class="test-button" onclick="showConsole()">查看控制台日誌</button>
+
+        <div id="diagnostic-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>💡 故障排除</h2>
+        <h3>如果沒有看到通知：</h3>
+        <ul>
+            <li>按 F12 打開開發者工具，查看 Console 標籤中的錯誤訊息</li>
+            <li>確認擴展已正確載入：進入 <code>chrome://extensions/</code> 檢查</li>
+            <li>確認權限：擴展應該有 "activeTab", "scripting", "storage", "tabs" 權限</li>
+            <li>重新載入擴展：在擴展管理頁面點擊重新載入按鈕</li>
+            <li>重新載入此頁面並再次嘗試</li>
+        </ul>
+
+        <h3>應該看到的控制台日誌：</h3>
+        <pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 12px;">
+TodoList Extension: Content script loaded on: [URL]
+TodoList Extension: Chrome runtime available
+TodoList Extension: Content script initialization complete
+TodoList Extension: Selected text: [選取的文字]
+TodoList Extension: Message sent successfully
+        </pre>
+    </div>
+
+    <script>
+        function checkExtensionStatus() {
+            const results = document.getElementById('diagnostic-results');
+            let html = '<h3>診斷結果：</h3>';
+
+            // 檢查基本環境
+            html += `<p><strong>Chrome版本：</strong> ${navigator.userAgent}</p>`;
+            html += `<p><strong>頁面URL：</strong> ${window.location.href}</p>`;
+
+            // 檢查Chrome APIs
+            if (window.chrome) {
+                html += '<p class="status success">✅ Chrome API 可用</p>';
+                if (chrome.runtime) {
+                    html += '<p class="status success">✅ Chrome Runtime API 可用</p>';
+                } else {
+                    html += '<p class="status error">❌ Chrome Runtime API 不可用</p>';
+                }
+            } else {
+                html += '<p class="status error">❌ Chrome API 不可用</p>';
+            }
+
+            results.innerHTML = html;
+        }
+
+        function testMessage() {
+            if (chrome && chrome.runtime) {
+                chrome.runtime.sendMessage({ action: 'addTodo', text: '測試訊息：手動發送的待辦事項' }, (response) => {
+                    const results = document.getElementById('diagnostic-results');
+                    if (chrome.runtime.lastError) {
+                        results.innerHTML = `<p class="status error">❌ 訊息發送失敗：${chrome.runtime.lastError.message}</p>`;
+                    } else {
+                        results.innerHTML = `<p class="status success">✅ 訊息發送成功：${JSON.stringify(response)}</p>`;
+                    }
+                });
+            } else {
+                const results = document.getElementById('diagnostic-results');
+                results.innerHTML = '<p class="status error">❌ 無法發送訊息：Chrome API 不可用</p>';
+            }
+        }
+
+        function showConsole() {
+            alert('請按 F12 打開開發者工具，然後查看 Console 標籤以查看詳細的日誌訊息。');
+        }
+
+        // 自動運行初始檢查
+        setTimeout(checkExtensionStatus, 1000);
+    </script>
+</body>
+</html>
