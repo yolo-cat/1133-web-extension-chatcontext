@@ -234,7 +234,7 @@ export default {
 
       try {
         await ElMessageBox.confirm(
-          '匯入新資料將覆蓋現有的所有待辦事項，確定要繼續嗎？',
+          '匯入新資料將覆蓋現有的所有資料，確定要繼續嗎？',
           '確認匯入',
           {
             confirmButtonText: '確定匯入',

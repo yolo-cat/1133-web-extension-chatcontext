@@ -113,7 +113,7 @@ function checkAndProcessPendingTodos() {
         chrome.storage.local.set({ pendingTodos: unprocessedTodos }, () => {
           console.log('ChatContext Extension: Pending todos processed and cleaned up')
           if (processedCount > 0) {
-            ElMessage.success(`已處理 ${processedCount} 個待辦事項`)
+            ElMessage.success(`已處理 ${processedCount} 個紀錄`)
           }
         })
       }

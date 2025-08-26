@@ -33,7 +33,7 @@
         <el-dialog v-model="editDialogVisible" title="編輯事項" width="500px">
           <el-form :model="editForm">
             <el-form-item label="內容">
-              <el-input v-model="editForm.label" placeholder="請輸入事項內容" />
+              <el-input v-model="editForm.label" placeholder="請輸入內容" />
             </el-form-item>
           </el-form>
           <template #footer>
@@ -45,7 +45,7 @@
     </el-card>
 
     <el-card v-else class="box-card">
-      <el-empty description="找不到此事項" />
+      <el-empty description="找不到此項" />
       <el-button @click="goBack">返回列表</el-button>
     </el-card>
   </div>
@@ -105,7 +105,7 @@ export default {
     async confirmDelete() {
       try {
         await ElMessageBox.confirm(
-          '確定要刪除此事項嗎？',
+          '確定要刪除？',
           '確認刪除',
           {
             confirmButtonText: '確定',

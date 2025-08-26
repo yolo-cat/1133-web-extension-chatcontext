@@ -138,7 +138,7 @@ export const useTodoStore = defineStore('todo', () => {
       category: targetCategory
     }
     todoItems.value.push(newTodo)
-    console.log('新增待辦事項:', newTodoLabel, '分配到:', targetCategory, '當前總數:', todoItems.value.length)
+    console.log('新增:', newTodoLabel, '分配到:', targetCategory, '當前總數:', todoItems.value.length)
   }
 
   function setTodoCategory(todoId, category) {
