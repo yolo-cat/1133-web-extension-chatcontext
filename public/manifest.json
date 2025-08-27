@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ToDoList Vue Extension",
+  "name": "Chatcontext",
   "version": "1.0.0",
-  "description": "A simple todolist extension built with Vue.",
+  "description": "A simple chatlist extension.",
   "permissions": [
     "activeTab",
     "scripting",
