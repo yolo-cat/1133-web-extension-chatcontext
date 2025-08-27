@@ -196,7 +196,7 @@ if (chrome && chrome.runtime && chrome.runtime.onMessage) {
     console.log('TodoList Extension: Content script received message:', message);
     if (message.action === 'todoAdded') {
       console.log('TodoList Extension: Todo successfully added to list');
-      showNotification('✅ 待辦事項已成功新增！', 'success');
+      showNotification('✅ 已成功新增！', 'success');
       sendResponse({ received: true });
     }
     return true;
